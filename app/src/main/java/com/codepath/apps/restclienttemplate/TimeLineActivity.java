@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.github.scribejava.apis.TwitterApi;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ import okhttp3.Headers;
 public class TimeLineActivity extends AppCompatActivity {
 
     private static final String TAG = "TimeLineActivity";
+    public static final int REQUEST_CODE = 20;
+
     TwitterClient client;
     RecyclerView rvTweets;
     TweetAdapter adapter;
@@ -74,12 +78,27 @@ public class TimeLineActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.composeIcon) {
                     Log.i(TAG, "composition has been clicked");
                     Intent i = new Intent(TimeLineActivity.this, ComposeActivity.class);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_CODE);
                 }
                 return true;
             }
         });
 
+    }
+
+    //Gets the tweet from ComposeActivity and adds it to the recyclerView and notifies adapter
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra(ComposeActivity.TWEET));
+            Log.i(TAG, "have returned tweet: " + tweet);
+
+            final int insertPosition = 0;
+            tweets.add(insertPosition, tweet);
+            adapter.notifyItemInserted(insertPosition);
+            rvTweets.smoothScrollToPosition(insertPosition);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -90,6 +109,7 @@ public class TimeLineActivity extends AppCompatActivity {
         return true;
     }
 
+    //calls TwitterClient to send get request for user timeline and updates adapter and recycler view accordingly
     private void populateHomeTimeLine() {
         client.getHomeTimeLine(new JsonHttpResponseHandler() {
             @Override

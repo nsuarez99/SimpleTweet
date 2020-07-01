@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,12 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+import org.parceler.Parcels;
+
+import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
 
     public static final String TAG = "ComposeActivity";
     private static final int MAX_TWEET_LENGTH = 280;
+    public static final String TWEET = "Tweet";
+
+    TwitterClient twitterClient;
     TextInputLayout composeTextLayout;
     EditText composeText;
     Button tweetButton;
@@ -27,6 +38,8 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+
+        twitterClient = TwitterApp.getRestClient(this);
 
         composeText = findViewById(R.id.composeText);
         tweetButton = findViewById(R.id.tweetButton);
@@ -61,7 +74,30 @@ public class ComposeActivity extends AppCompatActivity {
             Toast.makeText(ComposeActivity.this, "Tweet Is Too Long", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_SHORT).show();
+            twitterClient.publishTweet(tweetContent, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.i(TAG, "onSuccess to publish tweet");
+                    try {
+                        Tweet tweet = Tweet.fromJson(json.jsonObject);
+                        Log.i(TAG, "Published tweet says: " + tweet.body);
+
+                        Intent i = new Intent();
+                        i.putExtra(TWEET, Parcels.wrap(tweet));
+                        setResult(RESULT_OK, i);
+                        finish();
+
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error extracting tweet: " + e);
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TAG, "onFailure to publish tweet", throwable);
+                }
+            });
         }
     }
 
