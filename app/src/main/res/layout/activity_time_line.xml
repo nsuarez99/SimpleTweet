@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".TimeLineActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -31,5 +32,6 @@
         app:title="SimpleTweet"
         android:background="@color/twitter_blue"
         android:minHeight="?attr/actionBarSize"
+        app:menu="@menu/timeline_menu"
         android:theme="?attr/actionBarTheme" />
 </RelativeLayout>
