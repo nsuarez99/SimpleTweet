@@ -13,9 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class ComposeActivity extends AppCompatActivity {
 
     public static final String TAG = "ComposeActivity";
+    private static final int MAX_TWEET_LENGTH = 280;
+    TextInputLayout composeTextLayout;
     EditText composeText;
     Button tweetButton;
 
@@ -26,6 +30,10 @@ public class ComposeActivity extends AppCompatActivity {
 
         composeText = findViewById(R.id.composeText);
         tweetButton = findViewById(R.id.tweetButton);
+
+        //set max tweet length counter
+        composeTextLayout = findViewById(R.id.composeTextLayout);
+        composeTextLayout.setCounterMaxLength(MAX_TWEET_LENGTH);
 
         //set toolbar and composing action
         Toolbar toolbar= findViewById(R.id.toolbar);
@@ -45,12 +53,11 @@ public class ComposeActivity extends AppCompatActivity {
     // Publishes the text in the composeText view to Twitter
     public void publishTweet(View view) {
         String tweetContent = composeText.getText().toString();
-        final int maxTweetLength = 280;
 
         if (tweetContent.isEmpty()){
             Toast.makeText(ComposeActivity.this, "Tweet Cannot Be Empty", Toast.LENGTH_SHORT).show();
         }
-        else if (tweetContent.length() > maxTweetLength){
+        else if (tweetContent.length() > MAX_TWEET_LENGTH){
             Toast.makeText(ComposeActivity.this, "Tweet Is Too Long", Toast.LENGTH_SHORT).show();
         }
         else{
