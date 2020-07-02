@@ -7,7 +7,7 @@
     android:layout_margin="5dp">
 
     <ImageView
-        android:id="@+id/ivProfileImage"
+        android:id="@+id/tweetProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -17,22 +17,34 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvScreenName"
+        android:id="@+id/tweetUserScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/tweetProfileImage"
         tools:text="nsuarez99" />
 
     <TextView
-        android:id="@+id/tvBody"
+        android:id="@+id/tweetBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tweetUserScreenName"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tweetProfileImage"
+        tools:text="This is my tweet!!!" />
+
+    <TextView
+        android:id="@+id/tweetTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        tools:text="This is my tweet!!!" />
+        android:layout_above="@+id/tweetBody"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/tweetUserScreenName"
+        android:ems="10"
+        android:gravity="right"
+        tools:text="49 minutes ago" />
 </RelativeLayout>
