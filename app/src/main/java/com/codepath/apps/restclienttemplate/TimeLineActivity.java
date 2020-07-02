@@ -90,7 +90,7 @@ public class TimeLineActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra(ComposeActivity.TWEET));
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra(ComposeActivity.TWEET));
             Log.i(TAG, "have returned tweet: " + tweet);
 
             final int insertPosition = 0;
