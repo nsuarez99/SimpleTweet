@@ -50,11 +50,11 @@
 
     <ImageView
         android:id="@+id/tweetEmbedImage"
-        android:layout_width="345dp"
-        android:layout_height="253dp"
+        android:layout_width="322dp"
+        android:layout_height="225dp"
         android:layout_below="@+id/tweetBody"
         android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="2dp"
