@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -84,6 +85,15 @@ public class TimeLineActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onClickToDetail(View view){
+
+    }
+
+    public void onClickToProfile(View view){
+        Intent i = new Intent(TimeLineActivity.this, ProfileActivity.class);
+        startActivity(i);
     }
 
     //Gets the tweet from ComposeActivity and adds it to the recyclerView and notifies adapter

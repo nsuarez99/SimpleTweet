@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
 
     <ImageView
         android:id="@+id/tweetProfileImage"
@@ -14,7 +14,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:onClick="onClickToProfile"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -24,7 +23,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:onClick="onClickToDetail"
         android:layout_toEndOf="@+id/tweetProfileImage"
         tools:text="nsuarez99" />
 
@@ -33,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tweetUserScreenName"
-        android:onClick="onClickToDetail"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/tweetProfileImage"
@@ -44,7 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tweetBody"
-        android:onClick="onClickToDetail"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toEndOf="@+id/tweetUserScreenName"
@@ -64,7 +60,6 @@
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/tweetProfileImage"
-        android:onClick="onClickToDetail"
         android:scaleType="centerInside"
         android:visibility="visible"
         tools:srcCompat="@tools:sample/avatars" />
