@@ -13,11 +13,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.github.scribejava.apis.TwitterApi;
 
 import org.json.JSONException;
 import org.parceler.Parcels;
@@ -25,6 +26,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.Headers;
 
 public class TimeLineActivity extends AppCompatActivity {
@@ -33,10 +35,12 @@ public class TimeLineActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 20;
 
     TwitterClient client;
-    RecyclerView rvTweets;
+    RecyclerView tweetList;
     TweetAdapter adapter;
     List<Tweet> tweets;
     SwipeRefreshLayout swipeContainer;
+    User myUser;
+    ImageView profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,10 @@ public class TimeLineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_time_line);
 
         client = TwitterApp.getRestClient(this);
+
+        //set user profile image
+        profileImage = findViewById(R.id.timelineMyProfile);
+        setUser();
 
         //set refresh colors and actions
         swipeContainer = findViewById(R.id.swipeContainer);
@@ -60,19 +68,22 @@ public class TimeLineActivity extends AppCompatActivity {
         });
 
         //Find the recycler view
-        rvTweets = findViewById(R.id.rvTweets);
-        //Initialize the list of tweets and a dapter
+        tweetList = findViewById(R.id.tweetList);
+        //Initialize the list of tweets and a adapter
         tweets = new ArrayList<>();
         adapter = new TweetAdapter(this, tweets);
         //Set up the recycler view
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-        rvTweets.setAdapter(adapter);
+        tweetList.setLayoutManager(new LinearLayoutManager(this));
+        tweetList.setAdapter(adapter);
         populateHomeTimeLine();
 
 
-        //set toolbar and composing action
-        Toolbar toolbar= findViewById(R.id.toolbar);
+        //set toolbar
+        Toolbar toolbar = findViewById(R.id.timelineToolbar);
         setSupportActionBar(toolbar); //Necessary to make user of onCreateOptionsMenu() and onPrepareOptionsMenu() which are only useful for older legacy stuff, not relevant for new apps.
+
+
+        //set toolbar composing action
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -84,7 +95,27 @@ public class TimeLineActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
 
+    //sets user and userImage
+    public void setUser(){
+        client.getMyUser(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                try {
+                    myUser = User.fromJson(json.jsonObject);
+                    Glide.with(TimeLineActivity.this).load(myUser.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).placeholder(R.drawable.ic_vector_photo).into(profileImage);
+                } catch (JSONException e) {
+                    Log.e(TAG, "getting myUser failure: " + e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "getting onFailure");
+            }
+        });
     }
 
     public void onClickToDetail(View view){
@@ -93,6 +124,7 @@ public class TimeLineActivity extends AppCompatActivity {
 
     public void onClickToProfile(View view){
         Intent i = new Intent(TimeLineActivity.this, ProfileActivity.class);
+        i.putExtra("user", Parcels.wrap(myUser));
         startActivity(i);
     }
 
@@ -106,7 +138,7 @@ public class TimeLineActivity extends AppCompatActivity {
             final int insertPosition = 0;
             tweets.add(insertPosition, tweet);
             adapter.notifyItemInserted(insertPosition);
-            rvTweets.smoothScrollToPosition(insertPosition);
+            tweetList.smoothScrollToPosition(insertPosition);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

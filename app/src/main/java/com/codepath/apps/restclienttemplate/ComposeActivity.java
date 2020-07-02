@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +48,7 @@ public class ComposeActivity extends AppCompatActivity {
         composeTextLayout.setCounterMaxLength(MAX_TWEET_LENGTH);
 
         //set toolbar and composing action
-        Toolbar toolbar= findViewById(R.id.toolbar);
+        Toolbar toolbar= findViewById(R.id.timelineToolbar);
         setSupportActionBar(toolbar); //Necessary to make user of onCreateOptionsMenu() and onPrepareOptionsMenu() which are only useful for older legacy stuff, not relevant for new apps.
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

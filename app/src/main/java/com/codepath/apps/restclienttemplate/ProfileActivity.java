@@ -17,6 +17,7 @@ import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView profileImage;
     ImageView backgroundImage;
     Toolbar profileToolbar;
+    User myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         client = TwitterApp.getRestClient(this);
+        myUser = Parcels.unwrap(getIntent().getParcelableExtra("user"));
 
         profileImage = findViewById(R.id.profileImage);
         backgroundImage = findViewById(R.id.profileBackgorund);
@@ -56,7 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
         profileList.setLayoutManager(new LinearLayoutManager(this));
         profileList.setAdapter(adapter);
 
-        //Glide.with(context).load(user.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).into(profileListImage);
+        Glide.with(ProfileActivity.this).load(myUser.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).into(profileImage);
+        Glide.with(ProfileActivity.this).load(myUser.backgroundImageUrl).transform(new RoundedCornersTransformation(65,5)).into(backgroundImage);
     }
 
     //calls TwitterClient to send get request for user timeline and updates adapter and recycler view accordingly

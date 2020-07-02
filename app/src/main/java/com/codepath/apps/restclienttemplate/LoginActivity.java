@@ -9,9 +9,13 @@ import android.view.View;
 
 import com.codepath.apps.restclienttemplate.models.SampleModel;
 import com.codepath.apps.restclienttemplate.models.SampleModelDao;
+import com.codepath.apps.restclienttemplate.models.User;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
-public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
+import okhttp3.Headers;
+
+ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
 	SampleModelDao sampleModelDao;
 	
@@ -49,6 +53,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		 Intent i = new Intent(this, TimeLineActivity.class);
 		 startActivity(i);
 	}
+
 
 	// OAuth authentication flow failed, handle the error
 	// i.e Display an error dialog or toast
