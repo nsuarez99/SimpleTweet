@@ -16,9 +16,12 @@ import java.util.Locale;
 
 @Parcel
 public class Tweet {
+
+    public static final String TAG = "Tweet";
     public String body;
     public String createdAt;
     public User user;
+    public String embeddedImage;
 
     // Empty constructor needed for parceler library
     public Tweet(){}
@@ -28,6 +31,13 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = Tweet.parseTime(jsonObject.getString("created_at"));
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        try{
+            tweet.embeddedImage = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
+            Log.i(TAG, "Has image: " + tweet.body);
+        }
+        catch (JSONException e){
+        }
+
         return tweet;
     }
 
@@ -39,7 +49,7 @@ public class Tweet {
         return tweets;
     }
 
-    // Wed Oct 10 20:19:24 +0000 2018
+    // parses from Wed Oct 10 20:19:24 +0000 2018 to xx minutes/hours ago
     public static String parseTime(String rawJsonTime){
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
@@ -49,10 +59,9 @@ public class Tweet {
         try {
             long dateMillis = dateFormat.parse(rawJsonTime).getTime();
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-            Log.i("Tweet:", "relativeDate: " + relativeDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.e("Tweet", "parsing date error: " + e);
+            Log.e(TAG, "parsing date error: " + e);
             relativeDate = rawJsonTime;
         }
         return relativeDate;

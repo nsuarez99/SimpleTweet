@@ -47,4 +47,20 @@
         android:ems="10"
         android:gravity="right"
         tools:text="49 minutes ago" />
+
+    <ImageView
+        android:id="@+id/tweetEmbedImage"
+        android:layout_width="345dp"
+        android:layout_height="253dp"
+        android:layout_below="@+id/tweetBody"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/tweetProfileImage"
+        android:scaleType="centerInside"
+        android:visibility="visible"
+        tools:srcCompat="@tools:sample/avatars" />
 </RelativeLayout>

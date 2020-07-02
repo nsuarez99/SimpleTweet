@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.util.List;
@@ -70,6 +73,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         TextView tweetUserScreenName;
         TextView tweetBody;
         TextView tweetTime;
+        ImageView tweetEmbedImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +81,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             tweetUserScreenName = itemView.findViewById(R.id.tweetUserScreenName);
             tweetBody = itemView.findViewById(R.id.tweetBody);
             tweetTime = itemView.findViewById(R.id.tweetTime);
+            tweetEmbedImage = itemView.findViewById(R.id.tweetEmbedImage);
         }
 
         public void bind(Tweet tweet) {
@@ -84,6 +89,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
             tweetUserScreenName.setText(tweet.user.screenName);
             tweetTime.setText(tweet.createdAt);
             Glide.with(context).load(tweet.user.publicImageUrl).into(tweetProfileImage);
+
+            if (tweet.embeddedImage != null){
+                Log.i(Tweet.TAG, tweet.embeddedImage);
+                Glide.with(context).load(Uri.parse(tweet.embeddedImage)).apply(new RequestOptions()
+                        .placeholder(R.drawable.ic_vector_photo_stroke)).into(tweetEmbedImage);
+                tweetEmbedImage.setVisibility(View.VISIBLE);
+            }
+            else{
+                tweetEmbedImage.setVisibility(View.GONE);
+            }
         }
     }
 }
