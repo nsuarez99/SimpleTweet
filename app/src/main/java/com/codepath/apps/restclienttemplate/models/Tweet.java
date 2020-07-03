@@ -23,6 +23,7 @@ public class Tweet {
     public User user;
     public String embeddedImage;
     public long favoriteCount;
+    public String id;
     // Empty constructor needed for parceler library
     public Tweet(){}
 
@@ -32,6 +33,7 @@ public class Tweet {
         tweet.createdAt = Tweet.parseTime(jsonObject.getString("created_at"));
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.favoriteCount = jsonObject.getLong("favorite_count");
+        tweet.id = jsonObject.getString("id_str");
         try{
             tweet.embeddedImage = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
             Log.i(TAG, "Has image: " + tweet.body);
