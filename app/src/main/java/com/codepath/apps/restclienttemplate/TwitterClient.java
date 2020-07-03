@@ -69,7 +69,7 @@ public class TwitterClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("friends/list.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
-		params.put("count", 25);
+		params.put("count", 100);
 		params.put("screen_name", user.screenName);
 		client.get(apiUrl, params, handler);
 	}

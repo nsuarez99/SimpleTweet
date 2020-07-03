@@ -3,7 +3,7 @@ Natalia Suarez
 
 **SimpleTweet** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **X** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -29,7 +29,7 @@ The following **stretch** features are implemented:
 * [ ] User can **select "reply" from home timeline to respond to a tweet**
   * [ ] User that wrote the original tweet is **automatically "@" replied in compose**
 * [x] User can tap a tweet to **open a detailed tweet view**
-  * [ ] User can **take favorite (and unfavorite) or retweet** actions on a tweet
+  * [x] User can **take favorite (and unfavorite) or retweet** actions on a tweet
 * [ ] User can view more tweets as they scroll with infinite pagination
 * [ ] Compose tweet functionality is built using modal overlay
 * [x] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
@@ -41,7 +41,7 @@ The following **stretch** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Added profile image to toolbar that leads to your profile
 
 ## Video Walkthrough
 
