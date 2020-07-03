@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
@@ -23,13 +22,25 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
 
+    public interface DetailsOnClickListener{
+        void onClick(int position);
+    }
+
+    public interface ProfileOnClickListener{
+        void onClick(int position);
+    }
+
     Context context;
     List<Tweet> tweets;
+    DetailsOnClickListener detailsListener;
+    ProfileOnClickListener profileListener;
 
     //Pass in the context and list of tweets
-    public TweetAdapter(Context context, List<Tweet> tweets){
+    public TweetAdapter(Context context, List<Tweet> tweets, DetailsOnClickListener detailsOnClickListener, ProfileOnClickListener profileListener){
         this.context = context;
         this.tweets = tweets;
+        this.detailsListener = detailsOnClickListener;
+        this.profileListener = profileListener;
     }
 
 
@@ -76,22 +87,24 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
         TextView tweetUserScreenName;
         TextView tweetBody;
         TextView tweetTime;
+        TextView tweetName;
         ImageView tweetEmbedImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tweetProfileImage = itemView.findViewById(R.id.tweetProfileImage);
-            tweetUserScreenName = itemView.findViewById(R.id.tweetUserScreenName);
-            tweetBody = itemView.findViewById(R.id.tweetBody);
-            tweetTime = itemView.findViewById(R.id.tweetTime);
-            tweetEmbedImage = itemView.findViewById(R.id.tweetEmbedImage);
+            tweetProfileImage = itemView.findViewById(R.id.detailProfileImage);
+            tweetUserScreenName = itemView.findViewById(R.id.detailScreenName);
+            tweetBody = itemView.findViewById(R.id.detailBody);
+            tweetTime = itemView.findViewById(R.id.detailTime);
+            tweetEmbedImage = itemView.findViewById(R.id.detailEmbedImage);
+            tweetName = itemView.findViewById(R.id.detailName);
         }
 
         public void bind(Tweet tweet) {
             tweetBody.setText(tweet.body);
-            tweetUserScreenName.setText(tweet.user.screenName);
+            tweetUserScreenName.setText("@" + tweet.user.screenName);
             tweetTime.setText(tweet.createdAt);
-
+            tweetName.setText(tweet.user.name);
             Glide.with(context).load(tweet.user.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).into(tweetProfileImage);
 
             if (tweet.embeddedImage != null){
@@ -99,10 +112,62 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
                 Glide.with(context).load(Uri.parse(tweet.embeddedImage)).apply(new RequestOptions()
                         .placeholder(R.drawable.ic_vector_photo_stroke)).into(tweetEmbedImage);
                 tweetEmbedImage.setVisibility(View.VISIBLE);
+                tweetEmbedImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        detailsListener.onClick(getAdapterPosition());
+                    }
+                });
             }
             else{
                 tweetEmbedImage.setVisibility(View.GONE);
             }
+
+            setListeners();
+        }
+
+        public void setListeners(){
+            tweetProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    profileListener.onClick(getAdapterPosition());
+                }
+            });
+
+            tweetBody.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    detailsListener.onClick(getAdapterPosition());
+                }
+            });
+
+            tweetUserScreenName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    detailsListener.onClick(getAdapterPosition());
+                }
+            });
+
+            tweetTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    detailsListener.onClick(getAdapterPosition());
+                }
+            });
+
+            tweetName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    detailsListener.onClick(getAdapterPosition());
+                }
+            });
+
+            tweetEmbedImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    detailsListener.onClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

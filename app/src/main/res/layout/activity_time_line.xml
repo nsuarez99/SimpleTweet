@@ -47,14 +47,13 @@
                 android:id="@+id/timelineMyProfile"
                 android:layout_width="67dp"
                 android:layout_height="60dp"
+                android:onClick="onClickToProfile"
                 android:src="@drawable/ic_vector_photo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/timelineTwitter"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:onClick="onClickToProfile"
                 app:layout_constraintTop_toTopOf="parent">
-
             </ImageView>
 
             <ImageView

@@ -67,11 +67,32 @@ public class TimeLineActivity extends AppCompatActivity {
             }
         });
 
+        //set tweet adapter click listeners
+        TweetAdapter.DetailsOnClickListener detailClickListener = new TweetAdapter.DetailsOnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Tweet tweet = tweets.get(position);
+                Intent i = new Intent(TimeLineActivity.this, DetailActivity.class);
+                i.putExtra("tweet", Parcels.wrap(tweet));
+                startActivity(i);
+            }
+        };
+
+        TweetAdapter.ProfileOnClickListener profileClickListener = new TweetAdapter.ProfileOnClickListener() {
+            @Override
+            public void onClick(int position) {
+                User user = tweets.get(position).user;
+                Intent i = new Intent(TimeLineActivity.this, ProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(user));
+                startActivity(i);
+            }
+        };
+
         //Find the recycler view
         tweetList = findViewById(R.id.tweetList);
         //Initialize the list of tweets and a adapter
         tweets = new ArrayList<>();
-        adapter = new TweetAdapter(this, tweets);
+        adapter = new TweetAdapter(this, tweets, detailClickListener, profileClickListener);
         //Set up the recycler view
         tweetList.setLayoutManager(new LinearLayoutManager(this));
         tweetList.setAdapter(adapter);
@@ -104,7 +125,7 @@ public class TimeLineActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 try {
                     myUser = User.fromJson(json.jsonObject);
-                    Glide.with(TimeLineActivity.this).load(myUser.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).placeholder(R.drawable.ic_vector_photo).into(profileImage);
+                    Glide.with(TimeLineActivity.this).load(myUser.publicImageUrl).transform(new RoundedCornersTransformation(80,5)).placeholder(R.drawable.ic_vector_photo).into(profileImage);
                 } catch (JSONException e) {
                     Log.e(TAG, "getting myUser failure: " + e);
                     e.printStackTrace();
@@ -118,9 +139,6 @@ public class TimeLineActivity extends AppCompatActivity {
         });
     }
 
-    public void onClickToDetail(View view){
-
-    }
 
     public void onClickToProfile(View view){
         Intent i = new Intent(TimeLineActivity.this, ProfileActivity.class);

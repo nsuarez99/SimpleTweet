@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:onClick="onClickToDetail"
     android:layout_margin="5dp">
 
     <ImageView
-        android:id="@+id/tweetProfileImage"
+        android:id="@+id/detailProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -18,49 +17,61 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tweetUserScreenName"
+        android:id="@+id/detailScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/detailName"
+        tools:text="/@nsuarez99" />
+
+    <TextView
+        android:id="@+id/detailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tweetProfileImage"
-        tools:text="nsuarez99" />
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/detailProfileImage"
+        tools:text="Natalia Suarez" />
 
     <TextView
-        android:id="@+id/tweetBody"
+        android:id="@+id/detailBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tweetUserScreenName"
+        android:layout_below="@+id/detailScreenName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/tweetProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:layout_toEndOf="@+id/detailProfileImage"
         tools:text="This is my tweet!!!" />
 
     <TextView
-        android:id="@+id/tweetTime"
+        android:id="@+id/detailTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tweetBody"
+        android:layout_above="@+id/detailBody"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/tweetUserScreenName"
+        android:layout_toEndOf="@+id/detailScreenName"
         android:ems="10"
         android:gravity="right"
         tools:text="49 minutes ago" />
 
     <ImageView
-        android:id="@+id/tweetEmbedImage"
+        android:id="@+id/detailEmbedImage"
         android:layout_width="322dp"
         android:layout_height="225dp"
-        android:layout_below="@+id/tweetBody"
+        android:layout_below="@+id/detailBody"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/tweetProfileImage"
+        android:layout_toEndOf="@+id/detailProfileImage"
         android:scaleType="centerInside"
         android:visibility="visible"
         tools:srcCompat="@tools:sample/avatars" />

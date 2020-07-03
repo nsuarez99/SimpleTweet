@@ -3,64 +3,123 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DetailActivity">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:title="My Profile"
+        android:background="@color/twitter_blue"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
     <ImageView
-        android:id="@+id/tweetProfileImage"
+        android:id="@+id/detailProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_below="@+id/toolbarDetail"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="2dp"
+        android:onClick="onClickToProfile"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tweetUserScreenName"
+        android:id="@+id/detailTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tweetProfileImage"
-        tools:text="nsuarez99" />
-
-    <TextView
-        android:id="@+id/tweetBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tweetUserScreenName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/tweetProfileImage"
-        tools:text="This is my tweet!!!" />
-
-    <TextView
-        android:id="@+id/tweetTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tweetBody"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/detailBody"
+        android:layout_below="@+id/toolbarDetail"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/tweetUserScreenName"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_toEndOf="@+id/detailScreenName"
         android:ems="10"
         android:gravity="right"
+        android:onClick="onClickToDetail"
         tools:text="49 minutes ago" />
 
+    <TextView
+        android:id="@+id/detailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarDetail"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/detailProfileImage"
+        android:onClick="onClickToDetail"
+        tools:text="Natalia Suarez" />
+
+    <TextView
+        android:id="@+id/detailScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarDetail"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/detailName"
+        android:onClick="onClickToDetail"
+        tools:text="/@nsuarez99" />
+
+    <TextView
+        android:id="@+id/detailBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailScreenName"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/detailProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:onClick="onClickToDetail"
+        tools:text="This is my tweet!!!" />
+
     <ImageView
-        android:id="@+id/tweetEmbedImage"
+        android:id="@+id/detailEmbedImage"
         android:layout_width="322dp"
         android:layout_height="225dp"
-        android:layout_below="@+id/tweetBody"
+        android:layout_below="@+id/detailBody"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/tweetProfileImage"
+        android:layout_toEndOf="@+id/detailProfileImage"
+        android:onClick="onClickToDetail"
         android:scaleType="centerInside"
         android:visibility="visible"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <ToggleButton
+        android:id="@+id/favButton"
+        android:layout_width="33dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/detailEmbedImage"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/detailProfileImage"
+        android:background="@drawable/heart"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <TextView
+        android:id="@+id/favoriteCount"
+        android:layout_width="31dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailEmbedImage"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/favButton"
+        tools:text="24" />
+
+
 </RelativeLayout>

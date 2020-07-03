@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthBaseClient;
@@ -54,20 +55,22 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
 	// get home time line of the user
-	public void getFollowers(JsonHttpResponseHandler handler) {
+	public void getFollowers(User user, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("followers/list.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
+		params.put("screen_name", user.screenName);
 		client.get(apiUrl, params, handler);
 	}
 
 	// get home time line of the user
-	public void getFollowing(JsonHttpResponseHandler handler) {
+	public void getFollowing(User user, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("friends/list.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
+		params.put("screen_name", user.screenName);
 		client.get(apiUrl, params, handler);
 	}
 

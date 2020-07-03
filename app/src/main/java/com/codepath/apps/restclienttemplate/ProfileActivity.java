@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView profileImage;
     ImageView backgroundImage;
     Toolbar profileToolbar;
-    User myUser;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         client = TwitterApp.getRestClient(this);
-        myUser = Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
 
         profileImage = findViewById(R.id.profileImage);
         backgroundImage = findViewById(R.id.profileBackgorund);
@@ -59,13 +59,13 @@ public class ProfileActivity extends AppCompatActivity {
         profileList.setLayoutManager(new LinearLayoutManager(this));
         profileList.setAdapter(adapter);
 
-        Glide.with(ProfileActivity.this).load(myUser.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).into(profileImage);
-        Glide.with(ProfileActivity.this).load(myUser.backgroundImageUrl).transform(new RoundedCornersTransformation(65,5)).into(backgroundImage);
+        Glide.with(ProfileActivity.this).load(user.publicImageUrl).transform(new RoundedCornersTransformation(65,5)).into(profileImage);
+        Glide.with(ProfileActivity.this).load(user.backgroundImageUrl).transform(new RoundedCornersTransformation(65,5)).into(backgroundImage);
     }
 
     //calls TwitterClient to send get request for user timeline and updates adapter and recycler view accordingly
     public void getFollowersList(View view) {
-        client.getFollowers(new JsonHttpResponseHandler() {
+        client.getFollowers(user, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess");
@@ -87,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     //calls TwitterClient to send get request for user timeline and updates adapter and recycler view accordingly
     public void getFollowingList(View view) {
-        client.getFollowing(new JsonHttpResponseHandler() {
+        client.getFollowing(user, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess");
